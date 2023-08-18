@@ -8,6 +8,7 @@ public class Subset {
         System.out.println(ans);
     }
 
+    // here p - processed and unp - unprocessed
     static ArrayList<String> findAllSubsets(String p, String unp) {
         ArrayList<String> ans = new ArrayList<>();
         if (unp.isEmpty()) {
@@ -19,6 +20,7 @@ public class Subset {
         return ans;
     }
 
+    // here p - processed and unp - unprocessed
     static void findAllSubsets(String p, String unp,ArrayList<String> ans) {
         if (unp.isEmpty()) {
             ans.add(p);
@@ -28,6 +30,7 @@ public class Subset {
         findAllSubsets(p, unp.substring(1),ans);
     }
 
+    // here p - processed and unp - unprocessed
     // also contains ascii values of characters
     static ArrayList<String> findAllSubsetsWithAscii(String p, String unp) {
         ArrayList<String> ans = new ArrayList<>();

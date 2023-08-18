@@ -29,6 +29,7 @@ public class SkipChar {
         return ans + skipChar(str,ch,i+1);
     }
 
+    // here p - processed and unp - unprocessed
     static String skipChar(String p, String unp, char ch) {
         if (unp.isEmpty()) {
             return p;
