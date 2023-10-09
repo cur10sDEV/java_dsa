@@ -8,11 +8,17 @@ public class Main {
 //        tree.prettyDisplay();
 
         BinarySearchTree bst = new BinarySearchTree();
-        int[] nums = {15, 6, 9, 8, 11, 3, 4, 2, 19, 23, 21, 18};
-        for (int num : nums) {
-            bst.insert(num);
-        }
-
-        bst.display();
+        int[] nums = {1,2,3,4,5,6,7,8,9,10};
+//        for (int num : nums) {
+//            bst.insert(num);
+//        }
+        bst.populateSorted(nums);
+        bst.preOrder();
+        System.out.println();
+        bst.inOrder();
+        System.out.println();
+        bst.postOrder();
+        System.out.println();
+        bst.prettyDisplay();
     }
 }
