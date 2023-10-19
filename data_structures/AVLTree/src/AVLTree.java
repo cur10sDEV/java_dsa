@@ -4,7 +4,7 @@ public class AVLTree {
     public AVLTree() {
     }
 
-    public int height(Node node) {
+    private int height(Node node) {
         if (node == null) {
             return -1;
         }
@@ -44,7 +44,8 @@ public class AVLTree {
         }
         if (value < node.value) {
             node.left = insert(value, node.left);
-        } else {
+        }
+        if (value > node.value) {
             node.right = insert(value, node.right);
         }
         node.height = Math.max(height(node.left), height(node.right)) + 1;
@@ -75,7 +76,7 @@ public class AVLTree {
             if (height(node.right.left) - height(node.right.right) > 0) {
                 // right-left case
                 // first make it right-right case then left rotate
-                node.left = rightRotate(node.right);
+                node.right = rightRotate(node.right);
                 return leftRotate(node);
             }
         }
@@ -89,8 +90,8 @@ public class AVLTree {
         node.left = temp2;
 
         // update the heights
-        node.height = Math.max(height(node.left), height(node.right)) + 1;
-        temp.height = Math.max(height(temp.left), height(temp.right)) + 1;
+        node.height = Math.max(height(node.left), height(node.right) + 1);
+        temp.height = Math.max(height(temp.left), height(temp.right) + 1);
 
         return temp;
     }
@@ -98,13 +99,12 @@ public class AVLTree {
     private Node leftRotate(Node node) {
         Node temp = node.right;
         Node temp2 = temp.left;
-
         temp.left = node;
         node.right = temp2;
 
         // update the heights
-        node.height = Math.max(height(node.left), height(node.right)) + 1;
-        temp.height = Math.max(height(temp.left), height(temp.right)) + 1;
+        node.height = Math.max(height(node.left), height(node.right) + 1);
+        temp.height = Math.max(height(temp.left), height(temp.right) + 1);
 
         return temp;
     }
@@ -117,7 +117,6 @@ public class AVLTree {
         if (node == null) {
             return true;
         }
-
         return Math.abs(height(node.left) - height(node.right)) <= 1 && balanced(node.left) && balanced(node.right);
     }
 
@@ -203,10 +202,6 @@ public class AVLTree {
 
         public Node(int value) {
             this.value = value;
-        }
-
-        public int getValue() {
-            return value;
         }
     }
 }
