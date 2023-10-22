@@ -1,4 +1,4 @@
-package questions;
+package questions.BFS;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -53,6 +53,35 @@ public class AvgOfLevels {
                 sum += val;
             }
             double avg = sum / list.size();
+            result.add(avg);
+        }
+        return result;
+    }
+
+    // alternate solution - recommended
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> result = new ArrayList<>();
+
+        if (root == null) {
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            double sum = 0;
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode front = queue.poll();
+                sum += front.val;
+                if (front.left != null) {
+                    queue.offer(front.left);
+                }
+                if (front.right != null) {
+                    queue.offer(front.right);
+                }
+            }
+            double avg = sum / levelSize;
             result.add(avg);
         }
         return result;

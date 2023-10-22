@@ -1,11 +1,11 @@
-package questions;
+package questions.BFS;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class BottomUpLevelOrderTraversal {
+public class RightSideView {
     public static class TreeNode {
         int val;
         TreeNode left;
@@ -25,8 +25,8 @@ public class BottomUpLevelOrderTraversal {
         }
     }
 
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
 
         if (root == null) {
             return result;
@@ -36,10 +36,11 @@ public class BottomUpLevelOrderTraversal {
 
         while (!queue.isEmpty()) {
             int levelSize = queue.size();
-            List<Integer> list = new ArrayList<>();
             for (int i = 0; i < levelSize; i++) {
                 TreeNode front = queue.poll();
-                list.add(front.val);
+                if (i == levelSize - 1) {
+                    result.add(front.val);
+                }
                 if (front.left != null) {
                     queue.offer(front.left);
                 }
@@ -47,7 +48,6 @@ public class BottomUpLevelOrderTraversal {
                     queue.offer(front.right);
                 }
             }
-            result.add(0,list);
         }
         return result;
     }

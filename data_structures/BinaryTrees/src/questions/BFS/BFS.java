@@ -1,4 +1,4 @@
-package questions;
+package questions.BFS;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
