@@ -25,10 +25,10 @@ public class MaxDepth {
             return 0;
         }
         // no of nodes at left and right side
-        int leftHeight = maxDepth(root.left);
-        int rightHeight = maxDepth(root.right);
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
 
         // increase the depth by also counting the root node
-        return Math.max(leftHeight, rightHeight) + 1;
+        return Math.max(left, right) + 1;
     }
 }
