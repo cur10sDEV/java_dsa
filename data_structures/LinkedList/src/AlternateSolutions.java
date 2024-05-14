@@ -123,4 +123,18 @@ public class AlternateSolutions {
         }
         return head;
     }
+
+    // in-place reversal
+    private void reverse3(ListNode head) {
+        ListNode p = null;
+        ListNode n = head;
+
+        while (n != null) {
+            ListNode temp = n.next;
+            n.next = p;
+            p = n;
+            n = temp;
+        }
+        this.head = p;
+    }
 }
