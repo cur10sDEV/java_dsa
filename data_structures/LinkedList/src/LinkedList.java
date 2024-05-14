@@ -316,14 +316,14 @@ public class LinkedList {
         return head;
     }
 
-    public boolean isPalindrome(ListNode head) {
-        ListNode mid = getMid(head);
-        ListNode secondHead = reverseList(head);
-        ListNode reReverseHead = secondHead;
+    public boolean isPalindrome(Node head) {
+        Node mid = getMid(head);
+        Node secondHead = reverseList(head);
+        Node reReverseHead = secondHead;
 
         // compare
         while (head != null && secondHead != null) {
-            if (head.val != secondHead.val) {
+            if (head.value != secondHead.value) {
                 break;
             }
             head = head.next;
@@ -333,9 +333,9 @@ public class LinkedList {
         return head == null || secondHead == null;
     }
 
-    public ListNode getMid(ListNode head) {
-        ListNode f = head;
-        ListNode s = head;
+    public Node getMid(Node head) {
+        Node f = head;
+        Node s = head;
         while (f != null && f.next != null) {
             s = s.next;
             f = f.next.next;
