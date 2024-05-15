@@ -137,4 +137,90 @@ public class AlternateSolutions {
         }
         this.head = p;
     }
+
+    class ReorderList {
+        public void reorderList(ListNode head) {
+            if (head.next == null) {
+                return;
+            }
+
+            ListNode mid = getMid(head);
+            ListNode reverseMidHead = reverse(mid);
+
+            ListNode first = head;
+            ListNode second = reverseMidHead;
+
+            while (first.next != null) {
+                ListNode temp1 = first.next;
+                first.next = second;
+                first = temp1;
+                ListNode temp2 = second.next;
+                second.next = first;
+                second = temp2;
+            }
+            first.next = second;
+        }
+    }
+
+    class PalindromeList {
+        public boolean isPalindrome(ListNode head) {
+            ListNode mid = getMid(head);
+            ListNode reverseMidHead = reverse(mid);
+
+            ListNode temp1 = head;
+            ListNode temp2 = reverseMidHead;
+
+            ListNode firstHalfLastNode = null;
+
+            while (temp1 != null && temp2 != null) {
+                if (temp1.val != temp2.val) {
+                    return false;
+                }
+                firstHalfLastNode = temp1;
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            }
+
+            ListNode midHead = reverse(reverseMidHead);
+            firstHalfLastNode.next = midHead;
+            return true;
+        }
+    }
+
+    class ReverseLinkedListII {
+        public ListNode reverseBetween(ListNode head, int left, int right) {
+            if (left == right) {
+                return head;
+            }
+
+            ListNode prev = null;
+            ListNode curr = head;
+
+            for (int i = 0; curr != null && i < left - 1; i++) {
+                prev = curr;
+                curr = curr.next;
+            }
+
+            ListNode leftToLeft = prev;
+            ListNode reverseLast = curr;
+
+            for (int i = 0; curr != null && i < (right - left) + 1; i++) {
+                ListNode temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
+            }
+
+            if (leftToLeft != null) {
+                leftToLeft.next = prev;
+            } else {
+                head = prev;
+            }
+
+            reverseLast.next = curr;
+            return head;
+        }
+    }
 }
+
+
