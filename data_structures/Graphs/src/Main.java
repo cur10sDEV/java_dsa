@@ -1,20 +1,22 @@
 public class Main {
     public static void main(String[] args) {
-        ListGraph<Integer> g = new ListGraph<>();
-        g.addVertex(1);
-        g.addVertex(2);
-        g.addVertex(3);
-        g.addVertex(4);
-        g.addVertex(5);
-        g.addVertex(6);
-        g.addEdge(1,6);
-        g.addEdge(1,3);
-        g.addEdge(1,2);
-        g.addEdge(3,5);
-        g.addEdge(2,4);
-        g.addEdge(4,5);
-        g.printGraph();
-        g.dfsRec(1);
-        g.bfs(1);
+        WeightedGraph<Integer> wg = new WeightedGraph<>();
+        wg.addVertex(1);
+        wg.addVertex(2);
+        wg.addVertex(3);
+        wg.addVertex(4);
+        wg.addVertex(5);
+        wg.addVertex(6);
+        wg.addUndirectedEdge(1, 6, 7);
+        wg.addUndirectedEdge(1, 3, 4);
+        wg.addUndirectedEdge(1, 2, 3);
+        wg.addDirectedEdge(3, 5, 6);
+        wg.addUndirectedEdge(2, 4, 9);
+        wg.addUndirectedEdge(4, 5, 2);
+        wg.removeEdge(4, 5);
+        wg.printGraph();
+        wg.bfs(1);
+        wg.dfs(1);
+        wg.dfsRec(1);
     }
 }
