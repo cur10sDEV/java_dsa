@@ -141,6 +141,82 @@ public class WeightedGraph<T> {
         }
     }
 
+    // topo sort - dfs
+    public T[] sort() {
+        HashSet<T> visited = new HashSet<>();
+        Stack<T> stack = new Stack<>();
+
+        for (T ele : this.adjList.keySet()) {
+            if (!visited.contains(ele)) {
+                sort(ele, stack, visited);
+            }
+        }
+
+        T[] sorted = (T[]) new Object[this.numVertices];
+        int i = 0;
+        while (!stack.isEmpty()) {
+            T ele = stack.pop();
+            sorted[i++] = ele;
+        }
+
+        return sorted;
+    }
+
+    private void sort(T ele, Stack<T> stack, HashSet<T> visited) {
+        visited.add(ele);
+
+        for (Edge<T> neighbour : this.adjList.get(ele)) {
+            if (!visited.contains(neighbour.destination)) {
+                sort(neighbour.destination, stack, visited);
+            }
+        }
+
+        stack.push(ele);
+    }
+
+    // topo sort - bfs - # Kahn's Algorithm #
+    public T[] sortByBfs() {
+        // to store in degrees of vertices
+        HashMap<T, Integer> indegree = new HashMap<>();
+
+        // calculate the in-degrees of all the vertices
+        for (T ele : this.adjList.keySet()) {
+            // handling vertices with zero in-degree
+            if (!indegree.containsKey(ele)) {
+                indegree.put(ele, 0);
+            }
+            for (Edge<T> edge : this.adjList.get(ele)) {
+                indegree.put(edge.destination, indegree.getOrDefault(edge.destination, 0) + 1);
+            }
+        }
+
+        Queue<T> q = new LinkedList<>();
+        // add all vertices having indegree 0 to queue
+        for (T ele : indegree.keySet()) {
+            if (indegree.get(ele) == 0) {
+                q.add(ele);
+            }
+        }
+
+        T[] sorted = (T[]) new Object[this.numVertices];
+        int i = 0;
+        while (!q.isEmpty()) {
+            T ele = q.poll();
+            sorted[i++] = ele;
+
+            for (Edge<T> neighbour : this.adjList.get(ele)) {
+                // decrement the degree
+                indegree.put(neighbour.destination, indegree.get(neighbour.destination) - 1);
+                // if in-degree == 0 then add to queue
+                if (indegree.get(neighbour.destination) == 0) {
+                    q.add(neighbour.destination);
+                }
+            }
+        }
+
+        return sorted;
+    }
+
     public boolean detectCycle() {
         HashSet<T> visited = new HashSet<>();
         HashSet<T> pathVisited = new HashSet<>();
