@@ -58,6 +58,5 @@ public class Main {
 //        l1.display();
 //        l1.reverseList(l1.getHead());
 //        l1.display();
-        System.out.println(2 % 7);
     }
 }

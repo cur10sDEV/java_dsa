@@ -93,6 +93,7 @@ public class LinkedList {
         int value = tail.value;
         secondLast.next = null;
         tail = secondLast;
+        size--;
         return value;
     }
 
@@ -106,7 +107,7 @@ public class LinkedList {
         Node previous = get(index - 1);
         int value = previous.next.value;
         previous.next = previous.next.next;
-
+        size--;
         return value;
     }
 
