@@ -127,6 +127,7 @@ public class WeightedGraph<T> {
         HashSet<T> visited = new HashSet<>();
         visited.add(startVertex);
         dfsRec(startVertex, visited);
+        System.out.println();
     }
 
     public void dfsRec(T ele, HashSet<T> visited) {
@@ -138,6 +139,57 @@ public class WeightedGraph<T> {
                 dfsRec(neighbour.getDestination(), visited);
             }
         }
+    }
+
+    public boolean detectCycle() {
+        HashSet<T> visited = new HashSet<>();
+        HashSet<T> pathVisited = new HashSet<>();
+
+        for (T ele : this.adjList.keySet()) {
+            if (!visited.contains(ele)) {
+                if (dfsCheck(ele, visited, pathVisited)) return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean dfsCheck(T ele, HashSet<T> visited, HashSet<T> pathVisited) {
+        visited.add(ele);
+        pathVisited.add(ele);
+
+        for (Edge<T> edge : this.adjList.get(ele)) {
+            if (!visited.contains(edge.destination)) {
+                if (dfsCheck(edge.destination, visited, pathVisited)) return true;
+            } else if (pathVisited.contains(edge.destination)) return true;
+        }
+
+        pathVisited.remove(ele);
+        return false;
+    }
+
+    public int colorGraph() {
+        // to store colors assigned to every vertex
+        Map<T, Integer> colorMap = new HashMap<>();
+        int maxColors = 0;
+        for (T vertex : this.adjList.keySet()) {
+            // store neighbours colors
+            HashSet<Integer> neighbourColors = new HashSet<>();
+            for (Edge<T> neighbour : this.adjList.get(vertex)) {
+                if (colorMap.containsKey(neighbour.destination)) {
+                    neighbourColors.add(colorMap.get(neighbour.destination));
+                }
+            }
+
+            // check if the colors matched if then increment
+            int color = 1;
+            while (neighbourColors.contains(color)) {
+                color++;
+            }
+            maxColors = Math.max(color, maxColors);
+            colorMap.put(vertex, color);
+        }
+        // return the min colors used to color the graph
+        return maxColors;
     }
 
     public void printGraph() {
