@@ -243,6 +243,50 @@ public class WeightedGraph<T> {
         return false;
     }
 
+    // using Kahn's algorithm
+    public boolean detectCycleByBfs() {
+        // to store in degrees of vertices
+        HashMap<T, Integer> indegree = new HashMap<>();
+
+        // calculate the in-degrees of all the vertices
+        for (T ele : this.adjList.keySet()) {
+            // handling vertices with zero in-degree
+            if (!indegree.containsKey(ele)) {
+                indegree.put(ele, 0);
+            }
+            for (Edge<T> edge : this.adjList.get(ele)) {
+                indegree.put(edge.destination, indegree.getOrDefault(edge.destination, 0) + 1);
+            }
+        }
+
+        Queue<T> q = new LinkedList<>();
+        // add all vertices having indegree 0 to queue
+        for (T ele : indegree.keySet()) {
+            if (indegree.get(ele) == 0) {
+                q.add(ele);
+            }
+        }
+
+        int count = 0;
+        while (!q.isEmpty()) {
+            T ele = q.poll();
+            count++;
+
+            for (Edge<T> neighbour : this.adjList.get(ele)) {
+                // decrement the degree
+                indegree.put(neighbour.destination, indegree.get(neighbour.destination) - 1);
+                // if in-degree == 0 then add to queue
+                if (indegree.get(neighbour.destination) == 0) {
+                    q.add(neighbour.destination);
+                }
+            }
+        }
+
+        // if no cycle then topo sort will have all the vertices as it only works with DAG
+        // but if there is one then it will not have all the vertices hence the count will be different
+        return count == this.numVertices;
+    }
+
     public int colorGraph() {
         // to store colors assigned to every vertex
         Map<T, Integer> colorMap = new HashMap<>();
