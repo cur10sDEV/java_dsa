@@ -22,17 +22,17 @@ public class Main {
 //        wg.addUndirectedEdge(5, 6, 11);
 //        System.out.println("Min no of colors used to color the graph: " + wg.colorGraph());
 
-        wg.addDirectedEdge(1, 2, 0);
-        wg.addDirectedEdge(2, 3, 0);
-        wg.addDirectedEdge(3, 4, 0);
-        wg.addDirectedEdge(4, 5, 0);
-        wg.addDirectedEdge(5, 6, 0);
-        wg.addDirectedEdge(3, 7, 0);
-        wg.addDirectedEdge(7, 5, 0);
-        wg.addDirectedEdge(8, 2, 0);
-        wg.addDirectedEdge(8, 9, 0);
-        wg.addDirectedEdge(9, 10, 0);
-        wg.addDirectedEdge(10, 8, 0);
+        wg.addDirectedEdge(1, 2, 2);
+        wg.addDirectedEdge(2, 3, 5);
+        wg.addDirectedEdge(3, 4, 7);
+        wg.addDirectedEdge(4, 5, 3);
+        wg.addDirectedEdge(5, 6, 6);
+        wg.addDirectedEdge(3, 7, 11);
+        wg.addDirectedEdge(7, 5, 5);
+        wg.addDirectedEdge(8, 2, 6);
+        wg.addDirectedEdge(8, 9, 1);
+        wg.addDirectedEdge(9, 10, 3);
+        wg.addDirectedEdge(10, 8, 4);
         System.out.println(wg.detectCycleByBfs());
 
 
@@ -52,6 +52,7 @@ public class Main {
 //        System.out.println(Arrays.toString(wg.sort()));
 
         wg.printGraph();
+        System.out.println(wg.printShortestDistances(1));
         // TODO: update dfs and bfs traversal for components
 //        wg.bfs(1);
 //        wg.dfs(1);

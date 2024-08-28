@@ -152,7 +152,7 @@ public class WeightedGraph<T> {
             }
         }
 
-        T[] sorted = (T[]) new Object[this.numVertices];
+        T[] sorted = (T[]) new Object[this.getNumVertices()];
         int i = 0;
         while (!stack.isEmpty()) {
             T ele = stack.pop();
@@ -198,7 +198,7 @@ public class WeightedGraph<T> {
             }
         }
 
-        T[] sorted = (T[]) new Object[this.numVertices];
+        T[] sorted = (T[]) new Object[this.getNumVertices()];
         int i = 0;
         while (!q.isEmpty()) {
             T ele = q.poll();
@@ -215,6 +215,33 @@ public class WeightedGraph<T> {
         }
 
         return sorted;
+    }
+
+    public Map<T, Double> printShortestDistances(T source) {
+        PriorityQueue<Pair<T>> pq = new PriorityQueue<>((a, b) -> (int) (a.getDist() - b.getDist()));
+        Map<T, Double> dist = new HashMap<>();
+
+        for (T node : this.adjList.keySet()) {
+            dist.put(node, Double.MAX_VALUE);
+        }
+
+        pq.add(new Pair<>(source, 0));
+        dist.put(source, 0.0);
+
+        while (!pq.isEmpty()) {
+            Pair<T> ele = pq.poll();
+            T node = ele.getNode();
+            double distSoFar = ele.getDist();
+
+            for (Edge<T> neighbour : this.adjList.get(node)) {
+                if (distSoFar + neighbour.getWeight() < dist.get(neighbour.getDestination())) {
+                    dist.put(neighbour.getDestination(), distSoFar + neighbour.getWeight());
+                    pq.add(new Pair<>(neighbour.getDestination(), dist.get(neighbour.getDestination())));
+                }
+            }
+        }
+
+        return dist;
     }
 
     public boolean detectCycle() {
@@ -284,7 +311,7 @@ public class WeightedGraph<T> {
 
         // if no cycle then topo sort will have all the vertices as it only works with DAG
         // but if there is one then it will not have all the vertices hence the count will be different
-        return count == this.numVertices;
+        return count == this.getNumVertices();
     }
 
     public int colorGraph() {
@@ -320,6 +347,24 @@ public class WeightedGraph<T> {
                 System.out.print("{ d: " + e.getDestination() + ", w: " + e.getWeight() + " } ");
             }
             System.out.println();
+        }
+    }
+
+    private class Pair<T> {
+        private final T node;
+        private final double dist;
+
+        Pair(T node, double dist) {
+            this.dist = dist;
+            this.node = node;
+        }
+
+        T getNode() {
+            return this.node;
+        }
+
+        double getDist() {
+            return this.dist;
         }
     }
 
